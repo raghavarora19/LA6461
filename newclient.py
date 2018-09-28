@@ -1,16 +1,16 @@
 import socket
-host = "www.facebook.com"
+host = "www.ptsv2.com"
 port = 80
 
 headers = """\
-POST /auth HTTP/1.1\r
+POST /t/raghav/post HTTP/1.1\r
 Content-Type: application/x-www-form-urlencoded\r
 Content-Length: 29\r
-Host: www.facebook.com\r
+Host: ptsv2.com\r
 Connection: close\r
 \r\n """
 
-body = 'userName=Sonali&password=pass'
+body = 'username=raghav&password=pass'
 body_bytes = body.encode('ascii')
 header_bytes = headers.format(
     content_type="application/x-www-form-urlencoded",
@@ -19,3 +19,9 @@ header_bytes = headers.format(
 ).encode('iso-8859-1')
 
 payload = header_bytes + body_bytes
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("www.ptsv2.com", 80))
+s.sendall(payload)
+payload = s.recv(1024)
+print('Result : \n', payload.decode())
+s.close()

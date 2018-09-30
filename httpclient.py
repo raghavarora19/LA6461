@@ -40,8 +40,7 @@ Content-Type: application/json\r
 Content-Length: """ + str(lbody) + """\r
 Host: www.httpbin.org/post\r
 Connection: close\r
-\n""" + head + """
-\r\n """
+\r\n """ + head + """\r\n"""
 
  body_bytes = body.encode('ascii')
  header_bytes = headers.format(

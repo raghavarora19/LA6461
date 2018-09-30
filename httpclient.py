@@ -17,38 +17,50 @@ def get(verbose,header,optional,URL):
     s.close()
 
 
-def post(verbose,header,data,file,optional,URL):
- import socket
- host = "www.ptsv2.com"
+def post(verbos,header,data,file,optional,URL):
+ host = "www.httpbin.org"
  port = 80
+ if(data == None):
+     data = ""
+ print(header)
+ head= ""
+ for i in header:
+    # print(i)
+     head= head + str(i) + " \r\n"
+
+ #head='\r\n'.join(header)
+ print(head)
+
+ body = '' + data + ''
+ lbody=len(body)
 
  headers = """\
-POST /t/raghav/post HTTP/1.1\r
-Content-Type: application/x-www-form-urlencoded\r
-Content-Length: 29\r
-Host: ptsv2.com\r
+POST /post HTTP/1.1\r
+Content-Type: application/json\r
+Content-Length: """ + str(lbody) + """\r
+Host: www.httpbin.org/post\r
 Connection: close\r
+\n""" + head + """
 \r\n """
 
- body = 'username=raghav&password=pass'
  body_bytes = body.encode('ascii')
  header_bytes = headers.format(
-    content_type="application/x-www-form-urlencoded",
+    content_type="application/json",
     content_length=len(body_bytes),
     host=str(host) + ":" + str(port)
  ).encode('iso-8859-1')
 
  payload = header_bytes + body_bytes
  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
- s.connect(("www.ptsv2.com", 80))
+ s.connect(("www.httpbin.org", 80))
  s.sendall(payload)
  payload = s.recv(1024)
  abc = payload.decode()
  body = abc.split('\r\n\r\n')  # For Verbose
- if verbose == True:
-        print('Output : \n', payload.decode())
+ if verbos == True:
+        print('\n Output:\n', payload.decode())
  else:
-        print('Output : \n ', body[1])
+        print('\n Output:\n', body[1])
  s.close()
 
 
@@ -66,10 +78,18 @@ def main():
     argParser.add_argument('URL', type=str, help='Enter the URL ')
     args = argParser.parse_args()
     #print("Result : ", args.verbose,args.header,args.data,args.file,args.optional,args.URL)
-    if args.req_type == 'get'or 'GET':
-        get(args.verbose,args.header,args.optional,args.URL)
-    elif args.req_type == 'post'or 'POST' :
-        post(args.verbose,args.header,args.data,args.file,args.optional,args.URL)
+    if args.req_type == 'get' and 'GET':
+        if args.header == None:
+            nhead=" "
+            get(args.verbose, nhead, args.optional, args.URL)
+        else : get(args.verbose, args.header, args.optional, args.URL)
+
+    elif args.req_type == 'post' and 'POST':
+        if args.header == None :
+            nhead=" "
+            post(args.verbose, nhead, args.data, args.file, args.optional, args.URL)
+        else : post(args.verbose, args.header, args.data, args.file, args.optional, args.URL)
+
 
 
 

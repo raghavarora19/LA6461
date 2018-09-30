@@ -2,20 +2,22 @@ import socket
 import argparse
 
 
-def get():
-    request = "GET / HTTP/1.0\r\nHost: www.google.com\r\n\r\n"
+def get(verbose,header,optional,URL):
+    request = "GET / HTTP/1.0\r\nHost: "+ URL + "\r\n\r\n"
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(("www.google.com", 80))
     s.sendall(request.encode())
     result = s.recv(1024)
     abc = result.decode()
-    body = abc.split('\r\n\r\n')
-    # print('Result : \n', result.decode())
-    print('Result 2: \n ', body[0])
+    body = abc.split('\r\n\r\n')  # For Verbose
+    if verbose == True:
+        print('Output Get with Verbose : \n', result.decode())
+    else:
+        print('Output Get w/o Verbose : \n ', body[1])
     s.close()
 
 
-def post():
+def post(verbose,header,data,file,optional,URL):
  import socket
  host = "www.ptsv2.com"
  port = 80
@@ -41,23 +43,36 @@ Connection: close\r
  s.connect(("www.ptsv2.com", 80))
  s.sendall(payload)
  payload = s.recv(1024)
- print('Result : \n', payload.decode())
+ abc = payload.decode()
+ body = abc.split('\r\n\r\n')  # For Verbose
+ if verbose == True:
+        print('Output : \n', payload.decode())
+ else:
+        print('Output : \n ', body[1])
  s.close()
 
 
 
 def main():
-    #post()
-    #get()
+
     argParser = argparse.ArgumentParser()
 
-    argParser.add_argument("-v", "--verbose", required=, help="name of the user")
-    argParser.add_argument("-n", "--"
-    args = vars(argParser.parse_args())
+    argParser.add_argument('req_type', type=str, help="GET/POST")
+    argParser.add_argument('-v', "--verbose", action='store_true', help="Increase output ")
+    argParser.add_argument('-s', '--header', action='append', help="Headers to HTTP Request with the format")
+    argParser.add_argument('-d', '--data', action='store', help="An inline data to the body HTTP POST request")
+    argParser.add_argument('-f', '--file', action='store', help="Use -f filename")
+    argParser.add_argument('-o', '--optional', action='store', help="Write Body of Response to File" )
+    argParser.add_argument('URL', type=str, help='Enter the URL ')
+    args = argParser.parse_args()
+    #print("Result : ", args.verbose,args.header,args.data,args.file,args.optional,args.URL)
+    if args.req_type == 'get'or 'GET':
+        get(args.verbose,args.header,args.optional,args.URL)
+    elif args.req_type == 'post'or 'POST' :
+        post(args.verbose,args.header,args.data,args.file,args.optional,args.URL)
 
-    # display a friendly message to the user
-    print("Hi  {},!".format(args["name"], ))
 
-    main()
+
+main()
 
 

@@ -4,14 +4,32 @@ import argparse
 FLAG = 0
 
 def get(verbose, header, optional, URL):
+
     geturl = URL.split('/')
-    surl = geturl[0]
-    getdir=''
-    if len(geturl)>1:
-        for i in range(1,len(geturl)-1):
-            getdir += geturl[i] +'/'
-        getdir += geturl[len(geturl)-1]
-    request = "GET /"+getdir+" HTTP/1.0\r\nHost: " + surl + "\r\n\r\n"
+    if 'http:' in URL:
+        if 'www.' in URL:
+            surl = geturl[2]
+        else:
+            surl = 'www.' + geturl[2]
+    elif 'http:' and 'www.' not in URL:
+        surl = 'www.' + geturl[0]
+    else:
+        surl= geturl[0]
+
+    #print(geturl)
+
+    getdir = ''
+    if len(geturl) > 1:
+        if 'http' in URL:
+            for i in range(3, len(geturl) - 1):
+                getdir += geturl[i] + '/'
+        else:
+            for i in range(1, len(geturl) - 1):
+                getdir += geturl[i] + '/'
+
+        getdir += geturl[len(geturl) - 1]
+    request = "GET /" + getdir + " HTTP/1.0\r\nHost: " + surl + "\r\n\r\n"
+    #print(request)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((surl, 80))
     s.sendall(request.encode())

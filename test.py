@@ -26,6 +26,34 @@ Content-Length: 0
    # get(verbose, header, optional, Location)
 
 #print (c.find('Location:'))
+URL='https://www.httpbin.org/da/adas/d/'
+geturl = URL.split('/')
+if 'http' in URL:
+    if 'www.' in URL:
+        surl = geturl[2]
+    else:
+        surl = 'www.' +geturl[2]
+else:
+    surl = 'www.'+ geturl[0]
+print(geturl)
+
+getdir=''
+if len(geturl)>1:
+    if 'http' in URL:
+        #if 'www.' in URL:
+        for i in range(3, len(geturl) - 1):
+            getdir += geturl[i] + '/'
+        #else:
+         #   for i in range(3, len(geturl) - 1):
+        #        getdir += geturl[i] + '/'
+    else:
+        for i in range(1,len(geturl)-1):
+            getdir += geturl[i] +'/'
+
+    getdir += geturl[len(geturl)-1]
+    request = "GET /"+getdir+" HTTP/1.0\r\nHost: " + surl + "\r\n\r\n"
+print(request)
+
 if a.find('Location:'):
     split=a.splitlines()
     print(split)

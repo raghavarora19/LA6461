@@ -6,11 +6,16 @@ import argparse
 
 
 def get(verbose, header, optional, URL):
-    request = "GET / HTTP/1.0\r\nHost: " + URL + "\r\n\r\n"
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     geturl = URL.split('/')
     surl = geturl[0]
-    s.connect(("" + surl + "", 80))
+    getdir=''
+    if len(geturl)>1:
+        for i in range(1,len(geturl)-1):
+            getdir += geturl[i] +'/'
+        getdir += geturl[len(geturl)-1]
+    request = "GET /"+getdir+" HTTP/1.0\r\nHost: " + surl + "\r\n\r\n"
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((surl, 80))
     s.sendall(request.encode())
     result = s.recv(1024)
     abc = result.decode()
@@ -20,8 +25,7 @@ def get(verbose, header, optional, URL):
         f1 = open(optional, "w+")
         f1.write(body[1])
         if verbose:
-            print('Output Get wi'
-                  'th Verbose + Body Output to file ' + optional + ': \n ', body[0])
+            print('Output Get with Verbose + Body Output to file ' + optional + ': \n ', body[0])
             exit(0)
         else:
             exit(0)
@@ -103,10 +107,11 @@ Connection: close\r""" + """\n""" + head + """\r
 
 
 def redirectget(payload, reqtype, verbose, header, optional, URL):
-    payload[0]
+
     stat = payload[0].splitlines()
     status = stat[0].split()
     status_code = status[1]
+    print(payload[0])
     # print(int(status_code))
     if (int(status_code) >= 300) & (int(status_code) < 400):  # TEST WITH URL www.amazon.org
         print("You have been Redirected:", status_code)
@@ -116,7 +121,7 @@ def redirectget(payload, reqtype, verbose, header, optional, URL):
 
 
 def redirectput(payload, reqtype, verbose, header, data, file, optional, URL):
-    payload[0]
+
     stat = payload[0].splitlines()
     status = stat[0].split()
     status_code = status[1]

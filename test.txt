@@ -1,16 +1,1 @@
-{
-  "args": {}, 
-  "data": "Raghawesome", 
-  "files": {}, 
-  "form": {}, 
-  "headers": {
-    "Connection": "close", 
-    "Content-Length": "11", 
-    "Content-Type": "application/json", 
-    "Host": "www.httpbin.org/post", 
-    "Raghav": "arora"
-  }, 
-  "json": null, 
-  "origin": "142.118.33.117", 
-  "url": "http://www.httpbin.org/post/post"
-}
+www.google.com

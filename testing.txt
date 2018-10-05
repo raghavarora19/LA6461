@@ -1,17 +1,15 @@
 {
   "args": {}, 
-  "data": "abc@123", 
+  "data": "", 
   "files": {}, 
   "form": {}, 
   "headers": {
     "Connection": "close", 
-    "Content-Length": "7", 
+    "Content-Length": "0", 
     "Content-Type": "application/json", 
-    "Host": "www.httpbin.org/post", 
-    "Raghav": "arora", 
-    "Sonali": "mendir"
+    "Host": "www.httpbin.org/post"
   }, 
   "json": null, 
-  "origin": "142.118.33.117", 
+  "origin": "132.205.229.196", 
   "url": "http://www.httpbin.org/post/post"
 }

@@ -1,8 +1,6 @@
 import socket
 import argparse
 
-
-# Redirection -> TEST WITH URL www.amazon.org
 FLAG = 0
 
 def get(verbose, header, optional, URL):

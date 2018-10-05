@@ -7,9 +7,9 @@
     "Connection": "close", 
     "Content-Length": "0", 
     "Content-Type": "application/json", 
-    "Host": "www.httpbin.org/post"
+    "Host": "httpbin.org/post"
   }, 
   "json": null, 
-  "origin": "132.205.229.196", 
-  "url": "http://www.httpbin.org/post/post"
+  "origin": "142.118.33.117", 
+  "url": "http://httpbin.org/post/post"
 }

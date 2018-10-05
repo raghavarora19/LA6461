@@ -1,10 +1,10 @@
-a = """HTTP/1.0 302 Found
-Date: Thu, 04 Oct 2018 21:48:07 GMT
-Server: Server
-Location: http://www.ed.com
-Content-Length: 205
-Cneonction: close
-Content-Type: text/html; charset=iso-8859-1 
+a = """HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Fri, 05 Oct 2018 07:55:30 GMT
+Content-Type: text/html
+Content-Length: 178
+Connection: close
+Location: http://www.concordia.com/get
 """
 
 b="""HTTP/1.1 302 Found
@@ -22,11 +22,26 @@ Connection: close
 Content-Length: 0
 """
 
+
+   # get(verbose, header, optional, Location)
+
+#print (c.find('Location:'))
 if a.find('Location:'):
+    split=a.splitlines()
+    print(split)
+    res = [i for i in split if 'Location:' in i]
+    print(res)
+    reurl=res[0].split(': ')
+    result=reurl[1].split('//')
+    print(result)
+    finalreurl = [i for i in result if '' in i]
+    print(finalreurl)
     #get(verbose, header, optional, Location)
 
-print (a.find('Location:'))
-print(a[70:101])
+
+
+
+
 #if
  #//import socket
 #URL= 'www.httpbin.org/get'
